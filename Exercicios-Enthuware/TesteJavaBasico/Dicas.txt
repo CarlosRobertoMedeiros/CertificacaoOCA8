@@ -1,0 +1,56 @@
+Sobre Herança Multipla
+	Multiple inheritance of state includes ability to inherit instance fields from multiple classes.
+	A herança múltipla de estado inclui a capacidade de herdar campos de instância de várias classes.
+	
+	Multiple inheritance of type includes ability to implement multiple interfaces and/or ability to extend from multiple clases.
+	A herança múltipla do tipo inclui a capacidade de implementar várias interfaces e / ou a capacidade de se estender de vários clases.
+
+	"Interfaces, classes, and enums are all "types". Java allows a class to implement multiple interfaces. 
+	In this way, Java supports multiple inheritance of types.
+	"State", on the other hand, is represented by instance fields. Only a class can have instance fields 
+	and therefore, only a class can have a state. (Fields defined in an interface are always implicitly 
+	static, even if you don't specify the keyword static explicitly. Therefore, an interface does not 
+	have any state.) Since a class is allowed to extend only from one class at the most, it can inherit 
+	only one state. Thus, Java does not support multiple inheritance of state."
+
+This is an important concept and is explained in more detail here: https://docs.oracle.com/javase/tutorial/java/IandI/multipleinheritance.html	
+	
+Sobre Encapsulamento
+	It helps make sure that clients have no accidental dependence on the choice of representation
+	Ele ajuda a garantir que os clientes não tenham dependêcia acidental da escolha da representação
+	
+	It helps avoiding name clashes as internal variables are not visible outside.
+	Ele ajuda a evitar conflito de nomes pois as variáveis internas não são visiveis fora. 
+	
+	"Encapsulation is the technique used to package the information in such a way as to hide what should be 
+	hidden, and make visible what is intended to be visible. In simple terms, encapsulation generally means 
+	making the data variables private and providing public accessors."
+
+Benefícios do Polimorfismo
+	It makes the code more reusable.
+	Ele faz o código mais reusável
+	
+	It makes the code more dynamic
+	Ele faz o código mais dinâmico
+	
+	"Polymophism allows the actual decision of which method is to be invoked to be taken at runtime based on 
+	the actual class of object. This is dynamic binding and makes the code more dynamic."
+
+When a class whose members should be accessible only to members of that class is coded such a way that 
+its members are accessible to other classes as well, this is called ...
+"
+Quando uma classe cujos membros devem estar acessíveis apenas aos membros dessa classe é codificada de 
+forma que seus membros também sejam acessíveis a outras classes, isso é chamado ...
+"
+
+weak encapsulation
+When a class is properly encapsulated, only the members that are part of its public API are publicly 
+accessible to other classes. Rest is all private.
+
+	
+	
+	
+	
+	
+	
+	
