@@ -1,0 +1,125 @@
+Dicas Gerais --Exercícios Alura
+  Defina o escopo das Variáveis
+	Variável Local
+		Declarada dentro de um método, de um construtor ou do bloco que ela 
+		foi criada
+		
+		Exemplos
+			
+			void metodo(){
+				//Variáveis Locais
+				//Visivel somente aqui
+			}
+			
+			constructor(){
+				//Visível somente aqui
+			}
+			
+			bloco{
+				//Visivel somente aqui
+			}
+		
+	
+		Exemplo que funciona
+		void m1(String nome){
+			System.out.println(nome);
+			m2();//Nunca o parâmetro nome vai poder ser passado para m2
+			System.out.println(nome);
+		}
+		
+		void m2(){
+		}
+		
+	
+	Variável de Instância, objeto, atributo ou membro	
+		Variável declarada dentro da classe
+			Ela pode ser acessada em qualquer lugar dentro do meu objeto
+			
+		
+		Ex.: 
+		class Teste{
+			String nome = "Roberto" //Variável de Instância
+			String nomeCompleto = "Carlos "+nome; //Minha variável de Instância pode referenciar outra variável de instância
+			public Teste(){
+				System.out.println(nome); //Usada no construtor
+			} 
+			public void m2(){
+				System.out.println(nome); //Usada no método
+				System.out.println(nomeCompleto); //Funciona pois a variável de instância pode acessar outra variável de instância
+			}
+			
+			public static void main(String[] args){
+				Teste t = new Teste();
+				t.m2(); //Aqui Imprime o nome 
+				System.out.println(t.nome) //Acessar direto da variável de instância
+			}
+		}
+	
+	Variáveis Estáticas / Variáveis de Classe
+	     Variável estática eu posso acessar de através de qualquer escopo, dentro de um método local,
+					um constructor, dentro de um outro método, através da referência da classe Pessoa.id,
+					através da referência da instância p.id. Todos referenciam o mesmo id.
+	
+		Ex.:
+		
+		class Pessoa{
+			static int id =1;
+		}
+		class Teste{
+			public static void main(String []args){
+				Pessoa P = new Pessoa();
+				p.id; //Eu posso acessar uma variável de classe ou Estática através de uma instância /
+					  // Por ser uma Variável Estática, pode-se instanciar usar o new em n variáveis, porém todas vão apontar
+					  // para o mesmo endereço de memória, ou seja, um único id.
+				Pessoa.id; // Também pode ser acessada através da minha classe
+			}
+		
+		}
+		
+		Um método estático pode acessar variáveis estáticas.
+		Ex.:
+		class Pessoa{
+			static int id =1;
+			static void m1(){
+				System.out.println(id);
+			}
+		}
+		class Teste{
+			public static void main(String[] args){
+				Pessoa.m1();
+			}
+		}
+		
+		Regra Geral Variáveis Estáticas
+			Variáveis Estáticas podem ser acessadas a partir de qualquer lugar(respeitando os modificadores)
+			
+		Cuidados na Prova
+			- Uma variável local não pode ter 2 variáveis com mesmo nome;
+			Ex.: int a = 0;
+				 int a = 10; 
+				 
+			- Uma variável local não pode tentar redefinir o parâmetro de entrada do método
+			no main
+				String[]args = null // Não posso redefinir no método o valor do parâmetro
+				 
+				 
+			Não posso em uma classe ter duas variáveis membro, um sendo estática e outra não
+			void m1(){
+				int a;
+				static int a;
+			}
+			
+			Uma variável local e uma variável membro com mesmo nome é o shadowing(Getter ou Setter, passando parâmetros)
+			Ex. Shadowing(faz acessar a variável local)
+			
+			class X{
+				int a =10; // o valor de x está sendo redeclarado dentro do metodo metodo, pode passar o valor direto conforme exemplo abaixo ou criar uma variável dentro do método.
+				public void metodo(){
+					int a = 20;
+					System.out.println(a);
+				}
+			}
+			
+		
+	
+	
