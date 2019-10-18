@@ -103,7 +103,7 @@ Dicas Gerais --Exercícios Alura
 				String[]args = null // Não posso redefinir no método o valor do parâmetro
 				 
 				 
-			Não posso em uma classe ter duas variáveis membro, um sendo estática e outra não
+			Não posso em um método ter duas variáveis membro, um sendo estática e outra não
 			void m1(){
 				int a;
 				static int a;

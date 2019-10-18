@@ -1,0 +1,91 @@
+Uma classe tem a seguinte estrutura
+
+/****************************************************************/
+			ABAIXO É O INÍCIO DA CLASSE JAVA
+/****************************************************************/
+package br.com.rka.sistema; //O Pacote é opcional No máximo 1 Pacote
+
+import java.util.Date;
+import java.io.* // Posso ter de 0 a diversos imports
+
+class Pessoa {   //Em seguida Classes, Interfaces e enums
+}
+
+interface Figura{
+
+}
+
+//Comentário pode ter em qualquer lugar do arquivo .java
+// Existem 3 tipos de comentários
+
+ //Comentário de uma linha a Direita 
+ /*
+	Comentário de mais de uma linha
+ */
+ 
+ /**
+	Comentário Javadoc que vai servir para realizar a documentação
+ */
+
+ Para compilar o arquivo acima a partir de outro diretório
+ javac br/com/rka/sistema/Pessoa.java //Vão ser criados os arquivos Pessoa.class e Figura.class
+ 
+ Todas as informações acima podem estar contidas em uma classe java, porém são opcional
+   - Os imports são opcionais
+   - O nome da classe e interface são opcionais (Posso compilar uma classe sem um nome de arquivo)
+   - O nome do Pacote não é obrigatório
+   - Tudo compila, inclusive um arquivo vazio.
+   
+   Recaptulando
+	- Por arquivo eu posso ter	
+		- 1 Pacote
+		- 0 ou n imports
+		- 0 o n classes, enuns, interfaces etc
+		- Comentário entra em qualquer lugar no meu código
+		- Se eu não informar nada o java entende que estou no pacote padrão(package default)
+		
+
+Organização dos Pacotes
+		O java em runtime procura os arquivos .class
+		
+		Foi criado a classe Pessoa.java
+		Ela para ser compilada deve-se usar o seguinte comando
+		javac br/com/rka/sistema/Pessoa.java //Vão ser criados os arquivos Pessoa.class e Figura.class
+		
+		Resumindo: Se eu tiver arquivos no diretório br/com/rka/sistema para usar esses pacotes eu preciso importar esses arquivos
+		
+O que se pode ter dentro de uma classe?
+ 
+	class Pessoa{
+		String nome; //Atributos, variáveis de instância
+		Pessoa(String nome){  //Construtores com Variáveis que são Parâmetros
+			this.nome = nome
+		}
+		public String getNome(){ 			//Métodos com variáveis locais
+			String primeiroNome="Carlos ";  //**Simulando o Shadowing ... apenas para os sets
+			return primeiroNome+nome;
+		}
+	
+	}
+	
+	Cuidados com os nomes das classes e variáveis	
+		Posso ter uma classe que tenha o mesmo nome de uma variável interna a ela, um método com mesmo nome e o construtor
+		Ex.
+		   class A{
+				int A;
+				A(){
+				}
+				void A{}{
+				}
+		   }
+		
+	CUIDADO A SER TOMADO
+		Dentro de um arquivo java, eu só posso ter uma classe ou 1 interface ou 1 tipo com visibilidade publica.
+		Outra regra, se o cara é público ele tem que ter o mesmo nome do arquivo. Apenas para encontrar ele.
+		
+		Os tipos de variáveis dentro de uma classe são as de instância, statica e local
+		Continuar a partir de 10:30
+		
+		
+		
+   
