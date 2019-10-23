@@ -75,7 +75,7 @@ Which of the given options can be successfully inserted at line 1....
 	//Although this package is automatically imported, it is not an error to import it explicitly.
 2 - package p.util; --CERTO
 	//It is a perfectly valid package statement.
-3 - public class MyClass{ }  --ERRADO n„o se pode no mesmo arquivo ter duas classes p˙blicas
+3 - public class MyClass{ }  --ERRADO n√£o se pode no mesmo arquivo ter duas classes p√∫blicas
 4 - abstract class MyClass{ } --CERTO
 	//You can have more than one classes in a file but at most one of them can be public.
 	
@@ -339,7 +339,7 @@ class A{
 public class A{        
    int a;
    public void m1(){
-     private int b = 0; //dentro de um mÈtodo n„o tem modificador de acesso
+     private int b = 0; //dentro de um m√©todo n√£o tem modificador de acesso
      a = b;
    }
 }
@@ -700,6 +700,416 @@ actual parameters and does not include java and the name of the class.
 and args[1], which are 1 and 2
 
 ********************************************************************************************************************
+
+21 - 
+
+Consider the following class:
+
+public class ArgsPrinter{
+   public static void main(String args){
+      for(int i=0; i<3; i++){
+         System.out.print(args+" ");
+      }
+   }
+}
+
+What will be printed when the above class is run using the following command line:
+java ArgsPrinter 1 2 3 4
+
+1 - 1 2 3
+2 - ArgsPrinter 1 2
+3 - java ArgsPrinter 1 2
+4 - 1 1 1
+5 - None of the above. --CERTO 
+
+General 
+
+  To run a class from the command line, you need a main(String[] ) method that takes an array of Strings array not just a String.
+  Therefore, an exception will be thrown at runtime saying no main(String[] ) method found. Note that String[] and String... 
+are equivalent and so  parameter type of String... is also valid for main method. When you use String... 
+the compiler allows you to pass any number of String arguments to that method but internally, compiler converts String... 
+to String[]. 
+  It also wraps the arguments into a String[] and invokes the String[] method. The JVM has no idea about String.... It sees 
+  only String[].
+
+********************************************************************************************************************
+
+22 - 
+
+Which of the following statement(s) is/are correct?
+
+1 - Java supports multiple type inheritance as well as multiple state inheritance.
+2 - Java supports multiple type inheritance but not multiple state inheritance. -- CERTO
+3 - Java does not support multiple type inheritance but supports multiple state inheritance.
+4 - Java does not support multiple type or state inheritance.
+
+General
+Java allows a class to implement multiple interfaces. An interface is a "type" and does not contain any state. 
+This implies that Java supports multiple type inheritance.
+A class contains state and extending a class means inheriting the state. Since Java does not allow a class to extend f
+rom multiple classes, it means that Java does not support multiple state inheritance.
+
+This is an important concept and is explained in more detail here: 
+https://docs.oracle.com/javase/tutorial/java/IandI/multipleinheritance.htm
+
+********************************************************************************************************************
+
+23 - 
+
+What is meant by "encapsulation" ?
+
+1 - There is no way to access member variable.
+2-  There are no member variables.
+3-  Member fields are declared private and public accessor/mutator methods are provided to access and change their values if needed.
+4 - Data fields are declared public and accessor methods are provided to access and change their values.
+
+General
+
+  Encapsulation is one of the 4 fundamentals of OOP (Object Oriented Programming).
+  Encapsulation means that the internal representation of an object is generally hidden from view outside of the object's 
+definition. Typically, only the object's own methods can directly inspect or manipulate its fields. Some languages like 
+Smalltalk and Ruby only allow access via object methods, but most others (e.g. C++ or Java) offer the programmer a degree 
+of control over what is hidden, typically via keywords like public and private.
+  Hiding the internals of the object protects its integrity by preventing users from setting the internal data of the component 
+  into an invalid or inconsistent state. A benefit of encapsulation is that it can reduce system complexity, and thus increases 
+  robustness, by allowing the developer to limit the interdependencies between software components.
+
+********************************************************************************************************************
+
+24 - 
+
+Consider the classes shown below:
+
+class A{
+   public A() { }
+   public A(int i) {   System.out.println(i );    }
+}
+class B{
+   static A s1 = new A(1);
+   A a = new A(2);
+   public static void main(String[] args){
+      B b = new B();
+      A a = new A(3);
+   }
+   static A s2 = new A(4);
+}
+Which is the correct sequence of the digits that will be printed when B is run?
+
+1 - 1 ,2 ,3 4.
+2 - 1 ,4, 2 ,3 --CERTO
+3 - 3, 1, 2, 4
+4 - 2, 1, 4, 3
+5 - 2, 3, 1, 4
+
+General
+
+1. All static constants, variables, and blocks. Among themselves the order is the order in which they appear in the code. This 
+step is actually a part of "class initialization" rather than "instance initialization". Class initialization happens only if 
+the class is being used for the first time while being instantiated. For example, if you have invoked a static method of a 
+class or accessed a static field of that class earlier in the code, you have already used the class and the JVM would have 
+performed initialization of this class at that time. Thus, there wouldn't be any need to initialize the class if you 
+instantiate an object of this class now.
+
+Further, if the class has a superclass, then the JVM performs this step for the superclass first (if the superclass hasn't 
+been initialized already) and only after the superclass is initialized and static blocks are executed, does the JVM proceed 
+with this class. This process is followed recursively up to the java.lang.Object class.
+
+2. All non static constants, variables, and blocks. Among themselves the order is the order in which they appear in the code.
+
+3. Constructor.
+
+Just like the class initialization, instance initialization also happens for the superclass first. That is, if the class has a 
+superclass, then the JVM takes steps 2 and 3 given above for the superclass first and only after the superclass's instance 
+members are initialized, does the JVM proceed with this class. This process is also followed recursively up to the 
+java.lang.Object class.
+
+********************************************************************************************************************
+
+25 - 
+
+Given the following program, which statement is true?
+
+class SomeClass{
+   public static void main( String args[ ] ){
+      if (args.length == 0 ){
+         System.out.println("no arguments") ;
+      }
+      else{
+         System.out.println( args.length + " arguments") ;
+      }
+   }
+}
+
+
+1 - The program will fail to compile.
+2 - The program will throw a NullPointerException when run with zero arguments.
+3 - The program will print no arguments when called with zero arguments and 1 arguments  when called with one argument.
+	//The word java and class name are not a part of the argument list.
+4 - The program will print no arguments and 2 arguments when called with zero and one arguments.
+5 - The program will print no arguments and 3 arguments when called with zero and one arguments.
+	//When the program is called with no arguments, the args array will be of length zero.
+	
+General
+
+  When the program is called with no arguments, the args array will be of length zero. Unlike in C/C++, args[0] is not the 
+name of the program or class. This is because the name of the class is always the same as defined in the java file. So 
+there is no need for passing its name as an argument to main method.
+
+********************************************************************************************************************
+
+26 - 
+
+Consider the following class written by a novice programmer.
+
+class Elliptical{
+    public int radiusA, radiusB;
+    public int sum = 100;
+
+    public void setRadius(int r){
+        if(r>99) throw new IllegalArgumentException();
+        radiusA = r;
+        radiusB = sum - radiusA;
+        
+    }
+}
+After some time, the requirements changed and the programmer now wants to make sure that radiusB is always (200 - radiusA) 
+instead of (100 - radiusA) without breaking existing code that other people have written. Which of the following will 
+accomplish his goal?
+
+1 - Make sum = 200;
+2 - Make sum = 200 and make it private.
+3 - Make sum = 200 and make all fields (radiusA, radiusB, and sum) private.
+	//This should have been done when the class was first written.
+4 - Write another method setRadius2(int r) and set radiusB accordingly in this method.
+5 - His goal cannot be accomplished. --CERTO
+		//This class will not compile.
+		//There is no problem with the code. Remember, IllegalArgumentException extends from RuntimeException 
+		// and is a super class of NumberFormatException
+
+General
+	setRadius method makes sure that radiusB is set to sum - radiusA. So changing sum to 200 should do it. However, note that 
+radiusA, radiusB, and sum are public which means that any other class can access these fields directly without going 
+through the setRadius method. So there is no way to make sure that the value of radiusB is correctly set at all times. If you 
+make them private now, other classes that are accessing the fields directly will break.
+	The class should have been coded with proper encapsulation of the fields in the first place.
+
+********************************************************************************************************************
+
+27 - 
+
+You are writing a class named Bandwidth for an internet service provider that keeps track of number of bytes consumed by a user. The following code illustrates the expected usage of this class -
+
+class User{
+    Bandwidth bw = new Bandwidth();
+    
+    public void consume(int bytesUsed){
+        bw.addUsage(bytesUsed);
+    }
+   ... other irrelevant code    
+}
+
+class Bandwidth{
+    private int totalUsage;
+    private double totalBill;
+    private double costPerByte;
+    
+   
+    //add your code here
+
+    ...other irrelevant code
+}
+
+Your goal is to implement a method addUsage (and other methods, if required) in Bandwidth class such that all the bandwidth used by a User is reflected by the totalUsage field and totalBill is always equal to totalUsage*costPerByte. Further, that a User should not be able to tamper with the totalBill value and is also not able to reduce it.
+
+Which of the following implementation(s) accomplishes the above?
+
+1 - public void addUsage(int bytesUsed){ --CERTO
+    if(bytesUsed>0){
+       totalUsage = totalUsage + bytesUsed;
+       totalBill = totalBill + bytesUsed*costPerByte;
+    }
+}
+
+2 - protected void addUsage(int bytesUsed){
+       totalUsage += bytesUsed;
+       totalBill = totalBill + bytesUsed*costPerByte;
+}
+	//There is no validity check for bytesUsed argument. User will be able to tamper will the bill by suppling a 
+	//negative number for bytesUsed.
+
+3 - private void addUsage(int bytesUsed){
+    if(bytesUsed>0){
+       totalUsage = totalUsage + bytesUsed;
+       totalBill = totalUsage*costPerByte;
+    }
+}
+	//If this method is made private, User class will not be able to access it.
+
+4 - public void addUsage(int bytesUsed){
+    if(bytesUsed>0){
+       totalUsage = totalUsage + bytesUsed;
+    }
+}
+
+5 - public void updateTotalBill(){
+    totalBill = totalUsage*costPerByte;
+}
+	//This is not a good approach because once the User class calls addUsage() method, totalBill field will not reflect the 
+	//correct amount unless User also calls updateTotalBill, which means Bandwidth class is now dependent on some other 
+	// class to keep its internal state consistent with the business logic.
+	
+********************************************************************************************************************
+
+28 - 
+
+Given the following set of member declarations, which of the following is true?
+
+ int a;    //  (1)
+ static int a;    //  (2)
+ int f( )   { return a; }    //  (3)
+ static int f( ) { return a; }    //  (4)
+ 
+1 - Declarations (1) and (3) cannot occur in the same class definition.
+2 - Declarations (2) and (4) cannot occur in the same class definition.
+	//A static method can refer to a static field.
+3 - Declarations (1) and (4) cannot occur in the same class definition. --CERTO
+	//because method f() is static and a is not.
+4 - Declarations (2) and (3) cannot occur in the same class definition.
+5 - Declarations (1) and (2) cannot occur in the same class definition.	--CERTO
+	//variable names must be different. 
+
+General
+
+Local variables can have same name as member variables. The local variables will simply shadow the member variables with the 
+same names.
+Declaration (4) defines a static method that tries to access a variable named 'a' which is not locally declared.
+Since the method is static, this access will only be valid if variable 'a' is declared static within the class. Therefore 
+declarations (1) and (4) cannot occur in the same definition
+
+********************************************************************************************************************
+
+29 - 
+
+The options below contain the complete contents of a file.
+Which of these options can be run with the following command line once compiled?
+java main
+
+
+//in file main.java
+1 - class main {
+   public void main(String[] args) {
+       System.out.println("hello");
+   }
+}
+	//The main method should be static.
+
+//in file main.java
+2 -  public static void main(String[] args) {
+       System.out.println("hello");
+   }
+	//You cannot have a method on its own. It must be a part of a class.
+	
+//in file main.java
+3 - public class anotherone{
+}
+class main {
+   public static void main(String[] args) {
+       System.out.println("hello");
+   }
+}
+	//A public class must exist in a file by the same name. So this code is invalid because anotherone is a public class but 
+	//the name of the file is main. It would have been valid if the name of the file were anotherone.java.
+	//A non public class may exist in any file. This implies that there can be only one public class in a file.
+
+//in file main.java
+4 - class anothermain{ --CERTO
+   public static void main(String[] args) {
+       System.out.println("hello2");
+   }
+}
+class main {
+   public final static void main(String[] args) {
+       System.out.println("hello");
+   }
+}
+  //Observe that there is no public class in file main.java. This is ok. It is not necessary for a java file to have a 
+// public class. The requirement is that if a class (or enum) is public then that class (or enum) must be defined in a file 
+// by the same name and that there can be only one public class (or enum) in a file.
+
+// class main's main method will be executed. final is a valid modifier for the standard main method.
+
+// Note that final means a method cannot be overridden. Although static methods can never be overridden (they can be hidden), 
+//making a static method final prevents the subclass from implementing the same static method.
+
+General
+
+Observe that the given code does not follow the standard Java naming convention. The class names should start with a capital letter.
+There are questions in the exam that contain similar non-conventional and confusing names and that is why we have kept a few questions 
+like that in this question bank
+
+********************************************************************************************************************
+
+30 - 
+
+public class Triangle{
+    public int base;
+    public int height;
+    public double area;
+    
+    public Triangle(int base, int height){
+        this.base = base; this.height = height;
+        updateArea();
+    }
+
+    void updateArea(){
+        area = base*height/2;
+    }
+    public void setBase(int b){ base  = b; updateArea(); }
+    public void setHeight(int h){ height  = h; updateArea(); }
+}
+The above class needs to protect an invariant on the "area" field. Which three members must have the public access modifiers removed 
+to ensure that the invariant is maintained?
+
+1 - the base field --CERTO
+2 - the height field --CERTO
+3 - the area field ----CERTO
+4 - the Triangle constructor
+5 - the setBase method
+6 - the setHeight method
+
+
+General
+
+An invariant means a certain condition that constrains the state stored in the object. For example, in this case the value 
+of the area field of the Triangle must always be consistent with its base and height fields. Thus, it should never have a 
+value that is different from base*height/2.
+
+If you allow other classes to directly change the value of base, height, or area, using direct field access, the area field 
+may not contain the correct area thereby breaking the invariant.
+
+To prevent this inconsistency from happening, you need to prohibit changing the instance fields directly and instead permit 
+the changes only through the setter method because these methods call the updateArea method and keep the area and base and 
+height consistent.
+
+********************************************************************************************************************
+
+31 - 
+
+When a class whose members should be accessible only to members of that class is coded such a way that its members are 
+accessible to other classes as well, this is called ...
+
+1 - strong coupling
+2 - weak coupling
+3 - strong typing
+4 - weak encapsulation --CERTO
+5 - weak polymorphism
+6 - high cohesion
+7 - low cohesion
+
+General
+When a class is properly encapsulated, only the members that are part of its public API are publicly accessible to other 
+classes. Rest is all private.
+
 
 
 
