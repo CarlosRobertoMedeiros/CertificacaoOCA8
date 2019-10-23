@@ -1,0 +1,6 @@
+Dicas Gerais
+
+Qaundo duas classes estão no mesmo pacote, eu não preciso referenciar o pacote para realizar a importação das classes, isso é opcional.
+Para realizar o import uma classe precisa ser public para ser importada,uma classe default só pode ser acessada dentro do mesmo pacote.
+Prestar atenção que no exemplo a classe a ser importada é a Pessoa e ela deve ser pública
+Para ser acessa em outro pacote a classe precisa ser pública, pode se classe ou interface
