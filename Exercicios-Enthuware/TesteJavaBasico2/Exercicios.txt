@@ -1,0 +1,712 @@
+Basic Java
+
+1-
+
+Which of the given options should be inserted at line 1 so that the following code can compile without any errors?
+
+package objective1;
+// 1
+public class StaticImports{
+    
+    public StaticImports(){
+    out.println(MAX_VALUE);
+    }
+    
+}
+
+1 - import static java.lang.Integer.*;  --CERTO
+2 - static import java.lang.System.out;
+3 - static import Integer.MAX_VALUE;
+4 - import static java.lang.System.*;   --CERTO
+	/*The code uses out.println instead of System.out.println. out is a static field in java.lang.System class. 
+	That is why you need to import the static fields of java.lang.System.
+
+5 - static import java.lang.System.*;
+
+General:
+The order of keywords for a static import must be "import static ... ".
+  You can either import all the static members using import static java.lang.Integer.* or one specific member 
+using import static java.lang.Integer.MAX_VALUE;
+  You must specify the full package name of the class that you are importing (just like the regular import statement). 
+So, import static Integer.*; is wrong.
+
+
+********************************************************************************************************************
+
+2 -
+
+Given the following class, which of these are valid ways of referring to the class from outside of the package com.enthu?
+
+package com.enthu;
+public class Base{
+   // lot of code...
+}
+
+1 - Base
+	//Only if you import the whole package containing the class or import the class first.
+2 - By importing the package com.* and referring to the class as enthu.Base
+	//package 'com' does not contain Base.
+3 - importing com.* is illegal.
+	//It is perfectly legal but will not help here
+4 - By importing com.enthu.* and referring to the class as Base. --CERTO
+5 - By referring to the class as com.enthu.Base.		 --CERTO
+
+General
+
+	A class or interface can be referred to by using its fully qualified name or its simple name.
+	Using the fully qualified name will always work, but to use the simple name either the class must be in the same 
+package or it has to be imported.
+	By importing com.enthu.* all the classes from the package will be imported and can be referred to using 
+simple names.
+	Importing com.* will not import the subpackage enthu. It will only import the classes in package com.
+
+
+
+********************************************************************************************************************
+3 - 
+
+Which of the given options can be successfully inserted at line 1....
+
+//line 1
+   public class A{
+   }
+
+1 - import java.lang.*; --CERTO
+	//Although this package is automatically imported, it is not an error to import it explicitly.
+2 - package p.util; --CERTO
+	//It is a perfectly valid package statement.
+3 - public class MyClass{ }  --ERRADO não se pode no mesmo arquivo ter duas classes públicas
+4 - abstract class MyClass{ } --CERTO
+	//You can have more than one classes in a file but at most one of them can be public.
+	
+General
+To make a class abstract, you only need to mark it abstract as shown in Option 4. You don't necessarily need to 
+put an abstract method in a class
+
+********************************************************************************************************************
+4 -  Identify correct option(s)
+
+1 - Multiple inheritance of state includes ability to inherit instance methods from multiple classes.
+	//  Methods do not have state. Ability to inherit instance methods from multiple classes is called multiple inheritance 
+	//of implementation. Default methods introduce one form of multiple inheritance of implementation. A class can implement 
+	//more than one interface, which can contain default methods that have the same name. However, such a class cannot be compiled. 
+	//In this case, the implementing class is required to provide its own implementation of the common method to avoid ambiguity.
+2 - Multiple inheritance of state includes ability to inherit instance fields from multiple classes. --CERTO
+3 - Multiple inheritance of type includes ability to inherit instance fields as well as instance methods from multiple classes.
+4 - Multiple inheritance of type includes ability to implement multiple interfaces and ability to inherit static or instance fields from interfaces and/or classes.
+5 - Multiple inheritance of type includes ability to implement multiple interfaces and/or ability to extend from multiple clases --CERTO
+
+
+General
+
+Interfaces, classes, and enums are all "types". Java allows a class to implement multiple interfaces. In this way, Java supports 
+multiple inheritance of types.
+"State", on the other hand, is represented by instance fields. Only a class can have instance fields and therefore, only a class 
+can have a state. (Fields defined in an interface are always implicitly static, even if you don't specify the keyword static explicitly. 
+Therefore, an interface does not have any state.) Since a class is allowed to extend only from one class at the most, it can 
+inherit only one state. Thus, Java does not support multiple inheritance of state.
+
+This is an important concept and is explained in more detail here: https://docs.oracle.com/javase/tutorial/java/IandI/multipleinheritance.html
+
+
+********************************************************************************************************************
+5 - 
+
+Which of the following lines can be inserted at line 1 to make the program run?
+
+//line 1
+public class TestClass{
+  public static void main(String[] args){
+     PrintWriter pw = new PrintWriter(System.out);
+     OutputStreamWriter osw  =  new OutputStreamWriter( System.out );
+     pw.print("hello");
+  }
+}
+
+Assume that PrintWriter and OutputStreamWriter are valid classes in java.io package
+
+1 - import java.lang.*;
+	//Although you can import java.lang package explicitly, it is not required because this package is always imported by the compiler
+2 - import java.io.*; --CERTO
+	//This will make all the classes of java.io package available
+3 - import java.io.OutputStreamWriter;
+	//This will only make OutputStreamWriter available. PrintWriter will still be unavailable.
+4 - include java.io.*;
+	//nclude is not valid keyword in Jav
+5 - include java.lang.System;
+
+********************************************************************************************************************
+
+6 - 
+
+You have written some Java code in MyFirstClass.java file. Which of the following commands will you use to compile and run it.
+(Assume that the code has no package declaration.)
+
+1 - javac MyFirstClass.java
+    javar MyFirstClass
+2 - javap MyFirstClass.java
+    javar MyFirstClass.java
+3 - java MyFirstClass.java
+    java MyFirstClass.class
+4 - javac MyFirstClass.java
+    javar MyFirstClass.java
+5 - javac MyFirstClass.java --CERTO
+    java MyFirstClass
+
+General
+
+  Remember that java code must be written in a file with .java extension. If you have a public type (class, interface, or enum) in 
+the code, the name of the file must be same as the name of that public type.
+  Compilation and execution of a Java program is two step process. You first need to compile a java file using a Java compiler. 
+Oracle's JDK comes with a compiler. It is contained in the executable file named javac. 
+You will find it in <jdk installation folder>/bin.
+
+  javac compiles the source code and generates bytecode in a new file with the same name as the source file but with extension .class. 
+By default, the class file in generated in the same folder but javac is capable of placing it in a different folder if you use the -d flag.
+[This is just FYI and not required for the exam. -d is a very important and useful flag and we recommend that you read about it even if 
+it is not required for the exam.]
+
+In second step, the Java virtual machine (JVM), aka Java interpreter is invoked to execute the .class file. Oracle's JVM is contained 
+in the executable file named java. It is also present in the same bin folder of JDK installation. It takes the fully qualified name
+ (i.e. name including package) of the class file without extension as a argument.
+
+
+********************************************************************************************************************
+
+7 - 
+
+Consider the following code:
+ import java.util.ArrayList;
+
+ public class Student{
+    
+    ArrayList<Integer> scores;
+    private double average;
+    
+    public ArrayList<Integer> getScores(){ return scores; }
+    
+    public double getAverage(){ return average; }
+    
+    private void computeAverage(){
+        //valid code to compute average
+        average =//update average value
+    }
+
+    public Student(){
+        computeAverage();
+    }
+
+    //other code irrelavant to this question not shown
+
+}
+What can be done to improve the encapsulation of this class?
+
+1 - Make the class private.
+2 - Make the scores instance field private. --CERTO
+	//An important aspect of encapsulation is that other classes should not be able to modify the state fields of a class directly. 
+	//Therefore, the data members should be private (or protected if you want to allow subclasses to inherit the field) and if the 
+	//class wants to allow access to these fields, it should provide appropriate setters and getters with public access.
+3 - Make getScores() protected.
+4 - Make computeAverage() public.
+5 -Change getScores to return a copy of the scores list: --CERTO
+     public ArrayList<Integer> getScores(){
+       return new ArrayList(scores);
+     }
+	//If you return the same scores list, the caller would be able to add or remove elements from it, thereby rendering the average incorrect.
+	//This can be prevented by returning a copy of the list.
+
+
+********************************************************************************************************************
+
+8 - 
+
+Consider the following two classes defined in two .java files.
+
+//in file /root/com/foo/X.java
+package com.foo;
+public class X{
+  public static int LOGICID = 10;
+  public void apply(int i){
+    System.out.println("applied");
+  }
+}
+
+//in file /root/com/bar/Y.java
+package com.bar;
+//1  <== INSERT STATEMENT(s) HERE
+public class Y{
+    public static void main(String[] args){
+       System.out.println(X.LOGICID);
+    }
+}
+What should be inserted at //1 so that Y.java can compile without any error?
+
+1 - import static X;
+2 - import static com.foo.*;  
+	// Bad syntax. Package import does not use static keyword.
+3 - import static com.foo.X.*;
+	//This static import, although syntactically correct, will not help here because Y is accessing class X in X.LOGICID
+4 - import com.foo.*;            --CERTO
+	//   This is required because Y is accessing class X. static import of LOGICID is NOT required because Y is accessing LOGICID 
+	// through X ( X.LOGICID). Had it been just System.out.println(LOGICID), only one import statement: import static com.foo.X.*; 
+	// would have worked.
+5 - import com.foo.X.LOGICID;
+	//Bad Syntax. Syntax for importing static fields is:  import static <package>.<classname>.*; or import static <package>.<classname>.<fieldname>;
+
+********************************************************************************************************************
+
+9 - 
+
+What will the following code print when run?
+
+public class TestClass{
+  public static long main(String[] args){
+     System.out.println("Hello");
+     return 10L;
+  }
+}
+
+1 - Hello
+2 - It will not print anything.
+3 - It will not compile                
+4 - It will throw an Error at runtime. --CERTO
+5 - None of the above.
+
+General
+
+  When the program is run, the JVM looks for a method named main() which takes an array of Strings as input and returns nothing 
+(i.e. the return type is void).
+  But in this case, it doesn't find such a method ( the given main() method is returning long!) so it gives out the following message:
+  Error: Main method must return a value of type void in class TestClass, please
+define the main method as:
+   public static void main(String[] args)
+
+
+********************************************************************************************************************
+
+10 - 
+
+What will be result of attempting to compile this class?
+
+import java.util.*;
+package test;
+public class TestClass{
+    public OtherClass oc = new OtherClass();
+}
+class OtherClass{
+    int value;
+}
+
+1- The class will fail to compile, since the class OtherClass is used before it is defined.
+2- There is no problem with the code.
+3- The class will fail to compile, since the class OtherClass must be defined in a file called OtherClass.java
+	//This is not needed because OtherClass is not public. The class & file name must match only if the class is public.
+4- The class will fail to compile . --CERTO
+5- None of the above.
+
+General
+
+The order is:
+package statement.
+import statements
+class/ interface definitions.
+Important point to note here is YOU MUST READ THE QUESTIONS VERY CAREFULLY
+
+********************************************************************************************************************
+
+11 - 
+
+Following options show the complete code listings of a file. Which of these will compile?
+
+1 - //In file A.java
+import java.io.*;
+package x;
+public class A{
+}
+  //The package statement, if exists, must be the first statement in a java code file. If you move it up before the import, 
+  // this code will compile.
+
+2 - //In file B.java
+import java.io.*;
+class A{
+  public static void main() throws IOException{ } --CERTO
+}
+  //There is nothing wrong with this code.
+  //1. You can have a non-public class in a file with a different name.
+  //2. You can have a main method that doesn't take String[] as an argument. It will not make the class executable from the command line though
+
+3 - //In file A.java
+public class A{        
+   int a;
+   public void m1(){
+     private int b = 0; //dentro de um método não tem modificador de acesso
+     a = b;
+   }
+}
+  //Access modifiers (public/private/protected) are valid only inside the scope of a class, not of a method.
+
+4 - //In file A.java
+public class A{                               --CERTO
+  public static void main(String[] args){
+    System.out.println(new A().main);
+  }   
+  int main;
+}
+  //There is nothing wrong with this code. You can have a method and a field with the same name in a class
+
+5 - Only one of the above options is correct. 
+
+********************************************************************************************************************
+
+12 - 
+
+Given the following contents of two java source files:
+
+package util.log4j;
+public class Logger  {
+  public void log(String msg){
+      System.out.println(msg);
+  }
+}
+
+and
+
+package util;
+public class TestClass {
+    public static void main(String[] args) throws Exception {
+        Logger logger = new Logger();
+        logger.log("hello");
+    }
+}
+
+What changes, when made independently, will enable the code to compile and run?
+
+
+1- Replace Logger logger = new Logger(); with: log4j.Logger logger = new log4j.Logger();
+	//  If you are not importing a class or the package of the class, you need to use the class's fully qualified name while using it. 
+	//Here, you need to use util.log4j.Logger instead of just log4j.Logger: util.log4j.Logger logger = new util.log4j.Logger();
+2 - Replace package util.log4j; with package util; --CERTO
+	//  This will put both the classes in the same package and TestClass can then directly use Logger 
+	//class without importing anything.
+3 - Replace Logger logger = new Logger(); with: util.log4j.Logger logger = new util.log4j.Logger(); --CERTO
+	//   Using a fully qualified class name always works irrespective of whether you import the package or not.  
+	//In this case, all classes of package util are available in TestClass without any import statement but Logger is in util.log4j. 
+        //Therefore, the use of fully qualified class name for Logger, which is util.log4j.Logger, makes it work.
+4 - Remove package util.log4j; from Logger.
+	// Remember that you can never access a class that is defined in the default package (i.e. the package with no name) from 
+        // a class in any other package. So if you remove the package statement from Logger, 
+	// you can't access it from util package, which is where TestClass is.
+5-  Add import log4j; to TestClass.
+	// This will not help because Logger is in util.log4j package and not in log4j package
+	
+********************************************************************************************************************
+
+13 - 
+
+Consider the following two classes defined in two java source files.
+
+//in file /root/com/foo/X.java
+package com.foo;
+public class X{
+  public static int LOGICID = 10;
+  public void apply(int i){
+    System.out.println("applied");
+  }
+}
+
+//in file /root/com/bar/Y.java
+package com.bar;
+//1 <== INSERT STATEMENT(s) HERE
+public class Y{
+    public static void main(String[] args){
+       X x = new X();
+       x.apply(LOGICID);
+    }
+}
+What should be inserted at //1 so that Y.java can compile without any error?
+
+
+1 - import static X;
+2 - import static com.foo.*;  
+	//Bad syntax. com.foo is a package and you cannot import a package statically. You can only import static members of a class statically.  
+3 - import static com.foo.X.*;  -- CERTO
+	//This static import is required because of Y is accessing LOGICID directly without its class name ( i.e. X.LOGICID).
+4 - import com.foo.*;           -- CERTO
+	//This is required because Y also accesses the class X : X x = new X(); If Y had only one statement, 
+	// System.out.println(LOGICID); import static com.foo.X.* would suffice
+5 - import com.foo.X.LOGICID;
+	Syntax for importing static fields is:  import static <package>.<classname>.*; or import static <package>.<classname>.<fieldname>;
+	
+
+********************************************************************************************************************
+
+14 - 
+
+Which of these statements are true?
+
+1 - A static method can call other non-static methods in the same class by using the 'this' keyword.
+	//'this' reference is not available within a static method
+2 - A class may contain both static and non-static variables and both static and non-static methods. --CERTO
+3 - Each object of a class has its own copy of each non-static member variable.			     --CERTO
+4 - Instance methods may access local variables of static methods.
+	//local variables can only be accessed in the method they are defined. So you cannot access them anywhere outside that method.
+5 - All methods in a class are implicitly passed a 'this' parameter when called.
+	//All non-static/instance methods in a class are implicitly passed a 'this' parameter when called
+
+
+General
+
+  'this' is assigned a reference to the current object automatically by the JVM. Thus, within an instance method foo, calling this.foo();
+is same as calling foo();
+  Since there is no current object available for a static method, 'this' reference is not available in static methods and therefore it 
+can only be used within instance methods. For the same reason, static methods cannot access non static fields or methods of that class
+directly i.e. without a reference to an instance of that class.
+  Note : you can't reassign 'this' like this:
+  this = new Object(); 
+
+********************************************************************************************************************
+
+15 - 
+
+What will the following code print when compiled and run?
+
+public class Paper {
+    public String title;
+    public int id;
+    
+    public Paper(String title, int id){
+        this.title = title;
+        this.id = id;
+    }
+    
+    public static void main(String[] args) {
+        Paper[] papers = {
+            new Paper("T1", 1),
+            new Paper("T2", 2),
+            new Paper("T3", 3)
+        };
+        
+        System.out.println(papers);
+        System.out.println(papers[1]);
+        System.out.println(papers[1].id);
+    }
+}
+
+
+1 - papers
+Paper
+2
+
+2 - papers
+T2,2
+2
+
+3 - [LPaper;@<hashcode>
+Paper
+2
+
+4 - [LPaper;@<hashcode> -- CERTO
+Paper@<hashcode>
+2
+
+General
+
+You may find a few simple questions in the exam that expect you to know what is printed when you pass an array to System.out.print/println. 
+All you need to know is that when the class (or the superclass) of an object does not override the toString method, Object class's toString
+ is used, which prints the name of the class + @ sign + hash code of the object.
+
+Now, in case of an array, the name of the class is a little complicated. The details 
+(given here: http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getName-- ) are: The internal form of the name consists of the 
+name of the element type preceded by one or more '[' characters representing the depth of the array nesting. The encoding of element type 
+names is as follows:
+
+Element Type   Encoding
+boolean   Z
+byte      B
+char      C
+class or interface   Lclassname;  <-- Observe the character L here
+double    D
+float     F
+int       I
+long      J
+short     S
+
+For example, the name of one dimensional byte array is [B. Therefore, if you pass it to print/println method, [B@<hashcode> will be printed.
+The name of two dimensional byte array is [[B. Therefore, if you pass it to print/println method, [[B@<hashcode> will be printed.
+
+Thus, in this question, the first println statement will print [LPaper;@<hashcode> and the second println will print Paper@<hashcode>, 
+both followed by a new line, of course.
+
+********************************************************************************************************************
+
+16 - 
+
+Given the following code:
+interface Movable{
+   int offset = 100;
+   public void move(int dx);
+}
+interface Growable{
+  public void grow(int dy);
+}
+
+class Animal implements Movable, Growable{
+   public void move(int dx){ }
+   public void grow(int dy){ }
+}
+
+
+1 - Animal class illustrates Java's support for multiple inheritance of type. --CERTO
+2 - Animal class illustrates Java's support for multiple inheritance of state.
+3 - Animal class illustrates Java's support for multiple inheritance of type as well as state.
+4 - Animal class illustrates Java's support for multiple implementation inheritance.
+	// Java 8 allows an interface to contain implementations (in the form of default methods and as static methods). However, Java 8 still does not allow a class to inherit multiple implementations of the same method from two different unrelated interfaces. For example, 
+	// the following will not compile:
+	/*
+	interface Movable{
+	   public default void move(int dx) { System.out.println("in m");}
+	}
+	interface Growable{
+	   public default void move(int dx) { System.out.println("in g");}
+	}
+
+	class Animal implements Movable, Growable{
+	}
+
+	Compiler will complain that class Animal inherits unrelated defaults for move(int) from types Movable and Growable. To make it compile, 
+	you must provide an implementation of the move method explicitly in Animal class
+	*/
+
+General 
+
+Interfaces, classes, and enums are all "types". Java allows a class to implement multiple interfaces. In this way, Java supports multiple 
+inheritance of types.
+"State", on the other hand, is represented by instance fields. Only a class can have instance fields and therefore, only a class can have 
+a state. (Fields defined in an interface are always implicitly static, even if you don't specify the keyword static explicitly. 
+Therefore, an interface does not have any state.) Since a class is allowed to extend only from one class at the most, it can inherit only one 
+state. Thus, Java does not support multiple inheritance of state.
+
+This is an important concept and is explained in more detail here: https://docs.oracle.com/javase/tutorial/java/IandI/multipleinheritance.html
+
+********************************************************************************************************************
+
+17 - 
+
+Which of the following are correct about "encapsulation"?
+
+1 - Encapsulation is same as polymorphism.
+2 - It helps make sure that clients have no accidental dependence on the choice of representation --CERTO
+3 - It helps avoiding name clashes as internal variables are not visible outside.                 --CERTO
+4 - Encapsulation makes sure that messages are sent to the right object at run time.
+	//This is dynamic binding, an outcome of polymorphism
+5 - Encapsulation helps you inherit the properties of another class.
+
+
+General
+
+Encapsulation is the technique used to package the information in such a way as to hide what should be hidden, and make visible what is 
+intended to be visible. In simple terms, encapsulation generally means making the data variables private and providing public accessors.
+
+
+********************************************************************************************************************
+
+18 - 
+
+What will the following code print when compiled and run?
+
+
+public class ATest {
+    
+    
+    String global = "111";
+    
+    public int parse(String arg){
+        int value = 0;
+        try{
+            String global = arg;            
+            value = Integer.parseInt(global);
+        }
+        catch(Exception e){
+            System.out.println(e.getClass());
+        }
+        System.out.print(global+" "+value+" ");
+        return value;
+    }
+       public static void main(String[] args) {
+          ATest ct = new ATest();
+           System.out.print(ct.parse("333"));
+       }
+
+}
+
+
+1 - 111 333 333 -- CERTO
+2 - 333 333 333
+3 - java.lang.NumberFormatException
+4 - java.lang.Exception
+5 - Compilation fails.
+
+General
+
+Observe that a new local variable named global is defined within a try block. It is accessible only within the try block. It also shadows 
+the instance field of the same name global within the try block. It is this variable that is used in parseInt. Therefore, 
+value is set to 333.
+However, when you print global in parse method, the global defined in the try block is out of scope and the instance field named 
+global is used. Therefore, it prints 111.
+
+There is no exception because 333 can be parsed into an int. If you pass a string that cannot be parsed into an int to the parseInt method, it will throw a java.lang.NumberFormatException.
+
+********************************************************************************************************************
+
+19 - Which of the following are benefits of polymorphism?
+
+1 - It makes the code more reusable. --CERTO
+2 - It makes the code more efficient.
+	// This option is a bit ambiguous because it is not clear which efficiency is it talking about - execution, memory, or maintenance. 
+	// Our guess is that it is referring to execution efficiency. It is not true because polymorphism causes a very slight degradation 
+	// due to dynamic binding at run time.	
+3 - It protects the code by preventing extension.
+	//Just the reverse is true. Extension is how polymorphism is achieved
+4 - It makes the code more dynamic. --CERTO
+	//  Polymophism allows the actual decision of which method is to be invoked to be taken at runtime based on the actual class of object. 
+	//This is dynamic binding and makes the code more dynamic
+
+********************************************************************************************************************
+
+20 - 
+
+What will be the output of the following program when it is compiled and run with the command line:
+
+java TestClass 1 2 3
+
+public class TestClass {
+
+    public static void main(String[] args) {
+        System.out.println("Values : "+args[0]+args[1]);
+    }
+}
+
+1 - Values : java TestClass
+2 - Values : TestClass 1
+3 - Values : 12 -- CERTO
+4 - Values : 23
+5 - Values : 3
+
+General
+
+  In Java, command line arguments are passed into the program using the String[] parameter to the main method. The String array contains 
+actual parameters and does not include java and the name of the class.
+  Therefore, in this case, args will point to an array of Strings with 3 elements - "1", "2", and "3". The program prints out only args[0] 
+and args[1], which are 1 and 2
+
+********************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
