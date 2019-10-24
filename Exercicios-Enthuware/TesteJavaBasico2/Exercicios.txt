@@ -1279,14 +1279,14 @@ String mStr = "123";
 long m = // 1
 Which of the following options when put at //1 will assign 123 to m?
 
- 1 - new Long(mStr);
+ 1 - new Long(mStr);  --CERTO
     //Auto unboxing will occur.
-2 - Long.parseLong(mStr);
+2 - Long.parseLong(mStr);  --CERTO
 3 - Long.longValue(mStr);
     //longValue is a non-static method in Long class.
 4 - (new Long()).parseLong(mStr);
     //Long (or any wrapper class) does not have a no-args constructor, so new Long() is invalid.
-5 - Long.valueOf(mStr).longValue();
+5 - Long.valueOf(mStr).longValue(); --CERTO
     //Long.valueOf(mStr) returns a Long object containing 123. longValue() on the Long object returns 123.
 
 
