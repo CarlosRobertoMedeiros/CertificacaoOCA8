@@ -1,0 +1,339 @@
+********************************************************************************************************************
+INÍCIO DAS QUESTÕES DE JAVA DATATYPE
+********************************************************************************************************************
+1 -
+
+Given:
+String mStr = "123";
+long m = // 1
+Which of the following options when put at //1 will assign 123 to m?
+
+1 - new Long(mStr);  --CERTO
+    //Auto unboxing will occur.
+2 - Long.parseLong(mStr);  --CERTO
+3 - Long.longValue(mStr);
+    //longValue is a non-static method in Long class.
+4 - (new Long()).parseLong(mStr);
+    //Long (or any wrapper class) does not have a no-args constructor, so new Long() is invalid.
+5 - Long.valueOf(mStr).longValue(); --CERTO
+    //Long.valueOf(mStr) returns a Long object containing 123. longValue() on the Long object returns 123.
+	
+********************************************************************************************************************
+2 - 
+
+Which is the earliest line in the following code after which the object created on line // 1 can be garbage collected, assuming no compiler optimizations are done?
+
+public class NewClass{
+   private Object o;
+   void doSomething(Object s){  o = s;   }
+
+   public static void main(String args[]){
+      Object obj = new Object(); // 1
+      NewClass tc = new NewClass(); //2
+      tc.doSomething(obj); //3
+      obj = new Object();    //4 --> Aqui apontou o mesmo objeto
+      obj = null;    //5
+      tc.doSomething(obj); //6
+   }
+}
+
+1 - Line 1
+2 - Line 2
+3 - Line 3
+4 - Line 4
+5 - Line 5
+6 - Line 6 --CERTO
+	//Before this line the object is being pointed to by at least one variable
+
+General
+
+The official exam objectives now explicitly mention Garbage collection.  All you need 
+to know is:
+
+1. An object can be made eligible for garbage collection by making sure there are no 
+references pointing to that object.
+2. You cannot directly invoke the garbage collector. You can suggest the JVM to perform 
+garbage collection by calling System.gc();
+
+
+********************************************************************************************************************	
+3 - 
+
+Which of the changes given in options can be done (independent of each other) to let the following code compile and run without errors when its generateReport method is called?
+
+class SomeClass{
+   String s1 = "green mile";   // 0
+   public void generateReport( int n ){
+      String local;   // 1 --> Variáveis Locais devem ser inicializadas, pois a jvm não faz
+      if( n > 0 ) local = "good";   //2
+      System.out.println( s1+" = " + local );   //3
+   }
+}
+
+1 - Insert after line 2 : else local = "bad"; --CERTO
+2 - Insert after line 2 : if(n <= 0) local = "bad";
+3 - Move line 1 and place it after line 0. --CERTO
+4 - Change line 1 to : final String local = "rocky";
+	//Making it final will not let //2 compile as it would then try to modify a final variable.
+5 - The program already is without any errors.
+
+General
+
+The problem is that local is declared inside a method is therefore local to that method. 
+It is called a local variable (also known as automatic variable) and it cannot be used 
+before initialized. Further, it will not be initialized unless you initialize it 
+explicitly because local variables are not initialized by the JVM on its own. The 
+compiler spots the usage of such uninitialized variables and ends with an error message.
+
+1. Making it a member variable (choice "Move line 1 and place it after line 0.") 
+will initialize it to null.
+2. Putting an else part (choice "Insert after line 2 : else local = "bad";") will 
+ensure that it is initialized to either 'good' or 'bad'. So this also works.
+Choice "Insert after line 2 : if(n <= 0) local = "bad";" doesn't work because the 
+second 'if' will actually be another statement and is not considered as a part of first 'if'. 
+So, compiler doesn't realize that 'local' will be initialized even though it does get 
+initialized.
+
+********************************************************************************************************************
+
+4 - 
+
+What will be the result of attempting to compile and run the following class?
+
+public class TestClass{
+   public static void main(String args[ ] ){
+      int i, j, k;
+      i = j = k = 9;
+      System.out.println(i);
+   }
+}
+
+1 - The code will not compile because unlike in c++, operator '=' cannot be chained 
+i.e. a = b = c = d is invalid.
+  // can be chained. For example, assuming all the variables are declared appropriately before hand, a = b = c = d; is valid.
+  //However, chaining to use a value of a variable at the time of declaration is 
+  //not allowed.
+  //For example, int a = b = c = 100; is invalid if b and c are not already declared. 
+  //Had b and c been already declared, int a = b = c = 100; would have been valid.
+
+2 - The code will not compile as 'j' is being used before getting initialized.
+  //j is being initialize by the expression k = 9, which evaluates to 9.
+3 - The code will compile correctly and will display '9' when run. --CERTO
+4 - The code will not compile as 'j' and 'i' are being used before getting initialized.
+5 - All the variables will get a value of 9. --CERTO
+
+General
+
+Every expression has a value, in this case the value of the expression is the value that
+is assigned to the right hand side of the equation.
+k has a value of 9 which is assigned to j and then to i.
+
+Another implication of this is :
+boolean b = false;
+if( b = true) { System.out.println("TRUE");}
+The above code is valid and will print TRUE. Because b = true has a boolean value, 
+which is what an if statement expects.
+
+Note that if( i = 5) { ... } is not valid because the value of the expression i = 5 is 
+an int (5) and not a boolean.
+
+********************************************************************************************************************
+
+5 - 
+
+Given that TestClass is a class, how many objects and reference variables are created by the following code?
+
+TestClass t1, t2, t3, t4;
+t1 = t2 = new TestClass();
+t3 = new TestClass();
+
+1 - 2 objects, 3 references.
+2 - 2 objects, 4 references. -- CERTO
+	//two news => two objects. t1, t2, t3, t4 => 4 references.
+3 - 3 objects, 2 references.
+4 - 2 objects, 2 references.
+5 - None of the above.
+
+General
+
+A declared reference variable exists regardless of whether a reference value (
+i.e. an object) has been assigned to it or not
+
+********************************************************************************************************************
+6 - 
+
+Which of the following are valid code snippets appearing in a method:
+
+1 - int a = b = c = 100;
+  //Chaining to use a value of a variable at the time of declaration is not allowed. 
+  //Had b and c been already declared, it would have been valid. For example, the following 
+  //is valid:
+  //int  b = 0, c = 0;
+  //int a = b = c = 100;
+  //Even the following is valid:
+  //int  b , c;  //Not initializing b and c here.
+  //int a = b = c = 100; //declaring a and initializing c, b, and a at the same time.
+  //Notice the order of initialization of the variables - c is initialized first, b is initialized next by assigning to it the value of c. Finally, a is initialized.
+2 - int a, b, c; a = b = c = 100; --CERTO
+3 - int a, b, c=100; --CERTO
+4 - int a=100, b, c; --CERTO
+5 - int a= 100 = b = c;
+
+General
+Java does not allow chained initialization in declaration so option 1 and 5 are not valid.
+
+********************************************************************************************************************
+7 -
+
+What will be the result of attempting to compile and run the following code?
+public class InitClass{
+   public static void main(String args[ ] ){
+      InitClass obj = new InitClass(5);
+   }
+   int m;
+   static int i1 = 5;
+   static int i2 ;
+   int  j = 100;
+   int x;
+   public InitClass(int m){
+      System.out.println(i1 + "  " + i2 + "   " + x + "  " + j + "  " + m);
+   }
+  { j = 30; i2 = 40; }  // Instance Initializer
+   static { i1++; }      // Static Initializer
+}
+
+1 - The code will fail to compile since the instance initializer tries to assign a value to a static member.
+2 - The code will fail to compile since the member variable x will be uninitialized when it is used.
+3 - The code will compile without error and will print 6 40 0 30 5 when run. --CERTO
+4 - The code will compile without error and will print 5, 0, 0, 100, 5 when run.
+5 - The code will compile without error and will print 5, 40, 0, 30, 0 when run.
+
+
+General
+
+The value 5 is passed to the constructor to the local (automatic) variable m. So the 
+instance variable m is shadowed. Before the body of the constructor is executed, the 
+instance initializer is executed and assigns values 30 and 40 to variables j and i2, 
+respectively. A class is loaded when it is first used. For example,
+class A1{
+  static int i = 10;
+  static { System.out.println("A1 Loaded "); }
+}
+public class A{
+  static { System.out.println("A Loaded "); }
+  public static void main(String[] args){
+    System.out.println(" A should have been loaded");
+    A1 a1 = null;
+    System.out.println(" A1 should not have been loaded");
+    System.out.println(a1.i);
+  }
+}
+
+When you run it you get the output:
+A Loaded
+ A should have been loaded
+ A1 should not have been loaded
+A1 Loaded
+10
+Now, A should be loaded first as you are using its main method. Even though you are doing 
+A1 a1 = null; A1 will not be loaded as it is not yet used (so the JVM figures out that it 
+does not need to load it yet.) When you do a1.i, you are using A1, so before you use it, 
+it must be loaded. That's when A1 is loaded. Finally 10 is printed.
+
+********************************************************************************************************************
+8 - 
+
+Identify the valid code fragments when occurring by themselves within a method.
+
+1 --long y = 123_456_L;
+  //An underscore can only occur in between two digits. So the _ before L is invalid.
+2 - long z = _123_456L;
+  //An underscore can only occur in between two digits. So the _ before 1 is invalid.
+  //_123_456L is a valid variable name though. So the following code is valid:
+  //int _123_456L = 10;
+  //long z = _123_456L;
+  //An exception to this rule is that multiple continuous underscores can appear between 
+  // two digits. For example, 2____3 is as good as 2_3 and is same as 23.
+3 - float f1 = 123_.345_667F;
+  //An underscore can only occur in between two digits. So the _ before . is invalid.
+4 - float f2 = 123_345_667F; --CERTO
+5 - None of the above declarations are valid.
+
+General
+
+You may use underscore for all kinds of numbers including long, double, float, binary, as well as hex.  For example, the following are all valid numbers -
+int hex = 0xCAFE_BABE;
+float f = 9898_7878.333_333f;
+int bin = 0b1111_0000_1100_1100;
+
+********************************************************************************************************************
+9 - 
+
+Which of the following options will yield a Boolean wrapper object containing the 
+value true?
+
+1 - Boolean.parseBoolean(" true ")
+  //This will return false because of the extra spaces at the ends. Remember that case 
+  // of the argment is ignored but spaces are not.
+2 - Boolean.parseBoolean("true")
+  //Although this will return true but it is still not a valid answer because 
+  //parseBoolean returns a primitive and not a Boolean wrapper object.
+3 - Boolean.valueOf(true) --CERTO
+4 - Boolean.valueOf("trUE") --CERTO
+5 - Boolean.TRUE --CERTO
+
+General
+
+You need to remember the following points about Boolean:
+
+1. Boolean class has two constructors - Boolean(String) and Boolean(boolean)
+The String constructor allocates a Boolean object representing the value true if the 
+string argument is not null and is equal, ignoring case, to the string "true". 
+Otherwise, allocate a Boolean object representing the value false. 
+Examples: new Boolean("True") produces a Boolean object that represents true. 
+new Boolean("yes") produces a Boolean object that represents false.
+
+The boolean constructor is self explanatory.
+
+2. Boolean class has two static helper methods for creating booleans - parseBoolean 
+and valueOf.
+Boolean.parseBoolean(String ) method returns a primitive boolean and not a 
+Boolean object (Note - Same is with the case with other parseXXX methods such 
+as Integer.parseInt - they return primitives and not objects). The boolean 
+returned represents the value true if the string argument is not null and is equal, 
+ignoring case, to the string "true".
+
+Boolean.valueOf(String ) and its overloaded Boolean.valueOf(boolean ) version, 
+on the other hand, work similarly but return a reference to either Boolean.TRUE 
+or Boolean.FALSE wrapper objects. Observe that they dont create a new Boolean object 
+but just return the static constants TRUE or FALSE defined in Boolean class.
+
+3. When you use the equality operator ( == ) with booleans, if exactly one of the 
+operands is a Boolean wrapper, it is first unboxed into a boolean primitive and then the 
+two are compared (JLS 15.21.2). If both are Boolean wrappers, then their references 
+are compared just like in the case of other objects. Thus, new Boolean("true") == new 
+Boolean("true") is false, but new Boolean("true") == Boolean.parseBoolean("true") is 
+true.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
