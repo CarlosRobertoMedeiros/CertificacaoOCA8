@@ -315,6 +315,407 @@ are compared just like in the case of other objects. Thus, new Boolean("true") =
 Boolean("true") is false, but new Boolean("true") == Boolean.parseBoolean("true") is 
 true.
 
+********************************************************************************************************************
+
+10 - 
+
+Note: This question may be considered too advanced for this exam.
+
+Which statements can be inserted at line 1 in the following code to make the program write x on the standard output when run?
+
+public class AccessTest{
+   String a = "x";
+   static char b = 'x';
+   String  c = "x";
+   class Inner{
+      String  a = "y";
+      String  get(){
+         String c = "temp";
+         // Line 1
+         return c;
+      }
+   }
+
+   AccessTest() { 
+     System.out.println(  new Inner().get()  ); 
+   }
+
+   public static void main(String args[]) {  new AccessTest();  }
+}
+
+
+1 - c = c;
+	//It will reassign 'temp' to c!
+2 - c = this.a;
+	//It will assign "y" to c.
+3 - c = ""+AccessTest.b; --CERTO
+	//Because b is static
+4 - c = AccessTest.this.a; --CERTO 
+5 - c = ""+b; --CERTO
+
+********************************************************************************************************************
+11 - 
+
+Assume that a, b, and c refer to instances of primitive wrapper classes. Which of the following statements are correct?
+
+1 - a.equals(a) will always return true. --CERTO
+2 - b.equals(c) may return false even if c.equals(b) returns true.
+3 - a.equals(b) returns same as a == b.
+  //The wrapper classes's equals() method overrides Object's equals() method to 
+  // compare the actual value instead of the reference
+4 - a.equals(b) throws an exception if they refer to instances of different classes.
+  //It returns false in such a case
+5 - a.equals(b) returns false if they refer to instances of different classes. --CERTO
+
+General
+
+Equals method of a primitive wrapper class ( e.g. java.lang.Integer, Double, Float etc) 
+are
+1. symmetric => a.equals(b) returns same as b.equals(a)
+2. transitive => if a.equals(b) and b.equals(c) return true, then a.equals(c) returns true.
+3. reflexive => a.equals(a) return true.
+
+For example, the following code for the equals method on Integer explains how it works:
+public boolean equals(Object obj) {
+   if (obj instanceof Integer) {
+       return value == ((Integer)obj).intValue();
+   }
+   return false;
+}
+
+********************************************************************************************************************
+12 - 
+
+What happens when you try to compile and run the following program?
+public class CastTest{
+   public static void main(String args[ ] ){
+      byte b = -128 ;
+      int i = b ;
+      b = (byte) i;
+      System.out.println(i+" "+b);
+   }
+}
+
+1 - The compiler will refuse to compile it because i and b are of different types 
+    cannot be assigned to each other.
+2 - The program will compile and will print -128 and -128 when run . --CERTO
+	// A byte can ALWAYS be assigned to an int.
+3 - The compiler will refuse to compile it because -128 is outside the legal range of 
+    values for a byte.
+	//Range of byte is -128 to 127
+4 - The program will compile and will print 128 and -128 when run .
+5 - The program will compile and will print 255 and -128 when run .
+
+General
+  byte and int both hold signed values. So when b is assigned to i, the sign is preserved.
+
+********************************************************************************************************************
+
+13 - 
+
+  Which of the following comparisons will yield false?
+  
+  1 - Boolean.parseBoolean("true") == true
+  2 - Boolean.parseBoolean("TrUe") == new Boolean(null);
+	//This will yield false because parseBoolean("TrUe") will return true and 
+	//new Boolean(null) will return a Boolean wrapper object containing
+  3 - new Boolean("TrUe") == new Boolean(true);
+	//Even though both the sides have a Boolean wrapper containing true, the expression 
+	//will yield false because they point to two different Boolean wrapper objects
+  4 - new Boolean() == false;
+	//This will not compile because Boolean class does not have a no-args constructor.
+  5 - new Boolean("true") == Boolean.TRUE
+	// Even though both the sides have a Boolean wrapper containing true, the expression 
+	// will yield false because they point to two different Boolean wrapper objects
+  6 - new Boolean("no") == false;
+    //Any string other than "true" (ignoring case) will produce a Boolean 
+	//containing false. Therefore, this expression will yield true
+	
+General
+
+You need to remember the following points about Boolean:
+
+1. Boolean class has two constructors - Boolean(String) and Boolean(boolean)
+The String constructor allocates a Boolean object representing the value true if the 
+string argument is not null and is equal, ignoring case, to the string "true". 
+Otherwise, allocate a Boolean object representing the value false. 
+Examples: new Boolean("True") produces a Boolean object that represents true. 
+new Boolean("yes") produces a Boolean object that represents false.
+
+The boolean constructor is self explanatory.
+
+2. Boolean class has two static helper methods for creating booleans - parseBoolean and 
+valueOf.
+Boolean.parseBoolean(String ) method returns a primitive boolean and not a Boolean 
+object (Note - Same is with the case with other parseXXX methods such as 
+Integer.parseInt - they return primitives and not objects). The boolean returned 
+represents the value true if the string argument is not null and is equal, ignoring case,
+to the string "true".
+
+Boolean.valueOf(String ) and its overloaded Boolean.valueOf(boolean ) version, on the 
+other hand, work similarly but return a reference to either Boolean.TRUE or Boolean.FALSE 
+wrapper objects. Observe that they dont create a new Boolean object but just return the 
+static constants TRUE or FALSE defined in Boolean class.
+
+3. When you use the equality operator ( == ) with booleans, if exactly one of the operands 
+is a Boolean wrapper, it is first unboxed into a boolean primitive and then the two are 
+compared (JLS 15.21.2). If both are Boolean wrappers, then their references are compared 
+just like in the case of other objects. Thus, new Boolean("true") == new Boolean("true") 
+is false, but new Boolean("true") == Boolean.parseBoolean("true") is true.
+
+********************************************************************************************************************
+
+14 - 
+
+Identify correct statement(s) about the following code:
+
+	int value = 1,000,000; //1
+	switch(value){
+		case 1_000_000 : System.out.println("A million 1"); //2
+			break;
+		case 1000000 : System.out.println("A million 2"); //3
+			break;
+	}
+	
+1 - It will print A million 1 when compiled and run.
+2 - It will print A million 2 when compiled and run.
+3 - Compilation fails only at line //1
+4 - Compilation fails only at line //2
+5 - Compilation fails only at line //3
+6 - Compilation fails at line //1 and //3 --CERTO
+
+General
+
+1. You may use underscores (but not commas) to format a number for better code readability. So //1 is invalid.
+2. Adding underscores doesn't actually change the number. The compiler ignores the underscores. So 1_000_000 and 1000000 are actually same and you cannot have two case blocks with the same value. Therefore, the second case at //3 is invalid.
+
+You may use underscore for all kinds of numbers including long, double, float, binary, as well as hex.  For example, the following are all valid numbers -
+int hex = 0xCAFE_BABE;
+float f = 9898_7878.333_333f;
+int bin = 0b1111_0000_1100_1100;
+
+********************************************************************************************************************
+15 - 
+What will the following code print when run?
+
+public class TestClass{	
+    public static Integer wiggler(Integer x){
+       Integer y = x + 10;
+       x++;
+       System.out.println(x);
+       return y;
+    }
+
+    public static void main(String[] args){
+       Integer dataWrapper = new Integer(5);
+       Integer value = wiggler(dataWrapper);
+       System.out.println(dataWrapper+value);
+    }
+}
+
+1 - 5 and 20
+2 - 6 and 515
+3 - 6 and 20 --CERTO
+4 - 6 and 615
+5 - It will not compile.
+
+General
+
+1. Wrapper objects are always immutable. Therefore, when dataWrapper is passed into 
+wiggler() method, it is never changed even when x++; is executed. However, x, which 
+was pointing to the same object as dataWrapper, is assigned a new Integer object 
+(different from dataWrapper) containing 6.
+
+2. If both the operands of the + operator are numeric, it adds the two operands. Here, 
+the two operands are Integer 5 and Integer 15, so it unboxes them, adds them, and prints 
+20.
+
+********************************************************************************************************************
+16 -
+
+When is the Object created at line //1 eligible for garbage collection?
+
+public class TestClass{
+  public Object getObject(){
+     Object obj = new String("aaaaa");   //1
+     Object objArr[] = new Object[1]; //2
+     objArr[0] = obj; //3
+     obj = null;      //4
+     objArr[0] = null;//5
+     return obj;      //6
+  }
+}
+
+1 - Just after line 2.
+2 - Just after line 3.
+3 - Just after line 4.
+4 - Just after line 5. --CERTO
+5 - Just after line 6.
+
+General
+
+The official exam objectives now explicitly mention Garbage collection.  All you need to 
+know is:
+
+1. An object can be made eligible for garbage collection by making sure there are no 
+references pointing to that object.
+2. You cannot directly invoke the garbage collector. You can suggest the JVM to perform 
+garbage collection by calling System.gc();
+
+After line 3, both, obj and objArr[0] are pointing to the same String object.
+After line 4, obj points to null but objArr[0] is still pointing to the String object.
+After line 5, objArr[0] also starts pointing to null so there is no reference left 
+that is pointing to the String object. So it is now available for Garbage collection.
+
+********************************************************************************************************************
+17 - 
+
+Given the following declarations:
+        int a = 5, b = 7, k = 0;
+        Integer m = null;
+and the following statements:
+
+        k = new Integer(a) + new Integer(b);  //1
+        k = new Integer(a) + b; //2
+        k = a + new Integer(b); //3
+        m = new Integer(a) + new Integer(b); //4
+
+Executed independent of each other, what will be the value of k (for //1, //2, and //3) 
+and m (for //4) after execution of each of these statements?
+
+1 -
+12
+will not compile
+will not compile
+12
+
+2 -
+will not compile
+will not compile
+will not compile
+12
+
+3 - CERTO
+12
+12
+12
+12
+
+4 -
+will not compile
+will not compile
+will not compile
+will not compile
+
+5 -
+12
+12
+12
+will not compile
+
+
+General
+
+In all of these statements, auto-unboxing of integers will occur. 
+For the last statement, after unboxing a and b, the value 12 will be boxed into an 
+Integer object.
+
+********************************************************************************************************************
+18 - 
+
+How many objects have been created by the time the main method reaches its end in the following code?
+public class Noobs {
+    public Noobs(){
+        try{
+            throw new MyException();
+        }catch(Exception e){
+        }
+    }
+    public static void main(String[] args) {
+        Noobs a = new Noobs();
+        Noobs b = new Noobs();
+        Noobs c = a;
+    }
+}
+class MyException extends Exception{
+    
+}
+
+1 - 2
+2 - 3
+3 - 4 --CERTO
+4 - 5
+5 - 6
+
+General
+
+When a Noobs object is created, a MyException object is also created. Therefore a total 
+of 4 objects are created. The line Noobs c = a; just assigns an existing Noobs object to 
+c. No new object is created.
+
+Note: Some candidates have reported getting a similar question.
+The question is ambiguous because two Class objects (one for Noobs and one for MyException)
+are also created. If you consider those, then the answer would be 6. A String array object
+pointed to by args is also created and if you consider that, the answer would by 7. 
+Further, several Thread objects are also created (although not directly by this code.) 
+Since this is out of scope for the exam, it is best to ignore these kind of objects and 
+consider only the objects created directly by the code.
+
+********************************************************************************************************************
+19 - 
+
+After which line will the object created at line XXX be eligible for garbage collection?
+
+
+public Object getObject(Object a) //0
+   {
+
+Object b = new Object();  //XXX
+
+Object c, d = new Object(); //1
+c = b; //2
+b = a = null; //3
+return c; //4
+}
+
+1 - //2
+2 - //3
+3 - //4
+4 - Never in this method. --CERTO
+5 - Cannot be determined.
+
+General
+
+Note that at line 2, c is assigned the reference of b. i.e. c starts pointing to the 
+object created at //XXX. So even if at //3 b and a are set to null, the object is not 
+without any reference.
+Also, at //4 c is being returned. So the object referred to by c cannot be garbage 
+collected in this method!
+
+********************************************************************************************************************
+20 - 
+
+Which of these are NOT legal declarations within a class?
+
+1 - static int sa ;
+2 - final Object[ ] objArr = { null } ;
+3 - abstract int t ; --CERTO
+4 - abstract void format( ) ;
+5 - final static private double PI = 3.14159265358979323846 ;
+
+General
+
+static and final are valid modifiers for both member field and method declarations within 
+a class.
+transient and volatile modifiers are only valid for member field declarations.
+abstract and native are only valid for member methods.
+
+Note: a class declaration can have only final, abstract and public as modifiers, unless 
+it is a nested class, in which case, it can be declared private or  protected as well.
+Within a method, a local variable may be declared as final.
+
+********************************************************************************************************************
+
 
 
 
