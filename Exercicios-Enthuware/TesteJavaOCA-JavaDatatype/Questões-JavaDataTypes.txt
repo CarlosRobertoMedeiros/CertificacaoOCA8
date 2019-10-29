@@ -416,15 +416,15 @@ General
   Which of the following comparisons will yield false?
   
   1 - Boolean.parseBoolean("true") == true
-  2 - Boolean.parseBoolean("TrUe") == new Boolean(null);
+  2 - Boolean.parseBoolean("TrUe") == new Boolean(null); --CERTO
 	//This will yield false because parseBoolean("TrUe") will return true and 
 	//new Boolean(null) will return a Boolean wrapper object containing
-  3 - new Boolean("TrUe") == new Boolean(true);
+  3 - new Boolean("TrUe") == new Boolean(true); --CERTO
 	//Even though both the sides have a Boolean wrapper containing true, the expression 
 	//will yield false because they point to two different Boolean wrapper objects
-  4 - new Boolean() == false;
+  4 - new Boolean() == false; 
 	//This will not compile because Boolean class does not have a no-args constructor.
-  5 - new Boolean("true") == Boolean.TRUE
+  5 - new Boolean("true") == Boolean.TRUE --CERTO
 	// Even though both the sides have a Boolean wrapper containing true, the expression 
 	// will yield false because they point to two different Boolean wrapper objects
   6 - new Boolean("no") == false;
