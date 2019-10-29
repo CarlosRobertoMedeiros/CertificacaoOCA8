@@ -749,19 +749,106 @@ String, StringBuilder, and StringBuffer - all are final classes.
 
 Which of the following declarations are valid?
 
-float f1 = 1.0;
+1 - float f1 = 1.0;
 //1.0 is a double
-float f = 43e1;
+2 - float f = 43e1;
 //43e1 is a double
-float f = -1;    --CERTO
-float f = 0x0123;--CERTO
-float f = 4;     --CERTO
+3 - float f = -1;    --CERTO
+4 - float f = 0x0123;--CERTO
+5 - float f = 4;     --CERTO
 
 General
 
 Although the values in the option 1 and 2 are compile time constants and the values i.e. 1.0 and 43e1 can fit into a float, implicit narrowing does not happen because implicit narrowing is permitted only among byte, char, short, and int.
 
 ********************************************************************************************************************
+
+23 - 
+
+Note: Although Wrapper classes are not explicitly mentioned in the exam objectives, we have seen some candidates get questions on this aspect of Wrapper classes.
+
+What will be the output of the following program?
+
+public class EqualTest{
+   public static void main(String args[]){
+      Integer i = new Integer(1) ;
+      Long m = new Long(1);
+      if( i.equals(m)) System.out.println("equal");   // 1
+      else System.out.println("not equal");
+   }
+}
+
+1 - equal
+2 - not equal
+3 - Compile time error at //1
+4 - Runtime error at //1
+5 - None of the above.
+
+General
+
+Signature of equals method is : boolean equals(Object o); So it can take any object.
+The equals methods of all wrapper classes first check if the two object are of same class or not. If not, they immediately return false. Hence it will print not equal.
+
+********************************************************************************************************************
+
+24 - 
+
+Given:
+public class TestClass{
+     public static void main(String[] args){
+     int i = Integer.parseInt(args[1]);
+     System.out.println(args[i]);
+   }
+}
+What will happen when you compile and run the above program using the following command line:
+
+java TestClass 1 2
+
+
+1 - It will print 1
+2 - It will print 2
+3 - It will print some junk value.
+4 - It will throw ArrayIndexOutOfBoundsException. --CERTO
+5 - It will throw NumberFormatException
+  //Note: NumberFormatException extends IllegalArgumentException, which in turn extends RuntimeException
+
+General
+
+1. Arrays are indexed from 0.
+2. In java, the name of the class is not the first element of args.
+So, when the command line is : java TestClass 1 2, args[0] is 1 and args[1] is 2.
+When you try to access args[2], It will throw an ArrayIndexOutOfBoundsException because the array length is only 2 so args[2] is out of bounds.
+
+********************************************************************************************************************
+25 -
+
+Which of the following are valid at line 1?
+
+public class X{
+    //line 1: insert code here.
+}
+
+1 - String s; --CERTO
+2 - String s = 'asdf';
+//A string must be enclosed in double quotes ".
+3 - String s = 'a';
+4 - String s = this.toString(); --CERTO
+//nce every class directly or indirectly extends Object class and since Object class has a toString() method, 
+//that toString() method will be invoked and the String that it returns will be assigned to s.
+5 - String s = asdf;
+//there is no variable asdf defined in the given class
+
+********************************************************************************************************************
+26 - 
+
+
+
+
+
+
+
+
+
 
 
 
